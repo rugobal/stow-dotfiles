@@ -4,3 +4,9 @@
 [submodule "zsh/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
 	path = zsh/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "zsh/.oh-my-zsh/custom/plugins/z"]
+	path = zsh/.oh-my-zsh/custom/plugins/z
+	url = git@github.com:agkozak/zsh-z.git
+[submodule "zsh/.oh-my-zsh/custom/plugins/extract"]
+	path = zsh/.oh-my-zsh/custom/plugins/extract
+	url = git@github.com:le0me55i/zsh-extract.git
