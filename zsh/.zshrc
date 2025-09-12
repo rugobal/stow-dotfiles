@@ -135,8 +135,8 @@ if [ ! -n "$(grep -P "[[:space:]]winhost" /etc/hosts)" ]; then
         printf "%s\t%s\n" "$winhost" "winhost" | sudo tee -a "/etc/hosts"
 fi
 
-. /home/rugobal/.asdf/asdf.sh
-
+# ASDF setup
+[ -f "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
 
 
 export NVM_DIR="$HOME/.nvm"
