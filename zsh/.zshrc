@@ -71,7 +71,7 @@ SOLARIZED_THEME="dark"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting extract kubectl)
+plugins=(git z extract kubectl zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -152,13 +152,16 @@ export NVM_DIR="$HOME/.nvm"
 # Ctrl+u: Delete from the cursor to the beginning of the line
 bindkey -e
 
-# Bind Ctrl+i to delete from cursor to end of line, sin ce Ctrl+k is conflicting with tmux and neovim
-bindkey '^i' kill-line
+# Bind Alt+k to delete from cursor to end of line without overriding Tab completion (^I)
+bindkey '^[k' kill-line
 
 # Bind Ctrl+u to delete from cursor to beginning of line
 bindkey '^u' backward-kill-line
 
 
 
-export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin:$HOME/.cargo/bin"
 alias config='/usr/bin/git --git-dir=/home/rugobal/.dotfiles/ --work-tree=/home/rugobal'
+# Ensure aliases use underlying command completion and make lsd/ll behave like ls
+setopt complete_aliases
+compdef _ls ll lsd
