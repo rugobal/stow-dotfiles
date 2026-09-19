@@ -39,7 +39,8 @@ SOLARIZED_THEME="dark"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+# Required by tmuxp so it can set pane/window titles itself.
+export DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -116,14 +117,14 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/rugobal/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/rugobal/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/rugobal/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/anaconda3/bin:$PATH"
+        export PATH="/home/rugobal/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -165,3 +166,13 @@ alias config='/usr/bin/git --git-dir=/home/rugobal/.dotfiles/ --work-tree=/home/
 # Ensure aliases use underlying command completion and make lsd/ll behave like ls
 setopt complete_aliases
 compdef _ls ll lsd
+
+# >>> Codex installer >>>
+export PATH="/home/rugobal/.local/bin:$PATH"
+# <<< Codex installer <<<
+
+# opencode
+export PATH=/home/rugobal/.opencode/bin:$PATH
+
+# Added by the Hunk installer (https://hunk.dev)
+export PATH='/home/rugobal/.hunk/bin':"$PATH"
