@@ -1,6 +1,7 @@
 tmux/.tmux/plugins/
 
 # Pi credentials and machine-local runtime state (never sync)
+pi/.pi/agent/private/
 pi/.pi/agent/auth.json
 pi/.pi/agent/mcp.json
 pi/.pi/agent/models.json
