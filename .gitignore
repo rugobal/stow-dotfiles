@@ -17,3 +17,11 @@ pi/.pi/agent/missions/
 pi/.pi/agent/npm/
 pi/.pi/agent/web-search-cache/
 pi/.pi/agent/run-history.jsonl
+
+# Pi runtime state (never sync; acp.log holds session transcripts)
+pi/.pi/acp.log
+pi/.pi/agent/models-store.json
+pi/.pi/agent/pi-warden/
+pi/.pi/agent/pi-subagents/
+pi/.pi/agent/pi-typesafe/
+pi/.pi/agent/.billion-context-pi-update-check-*
