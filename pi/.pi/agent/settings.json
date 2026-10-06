@@ -16,7 +16,8 @@
     "npm:pi-warden",
     "npm:pi-fast-all",
     "npm:pi-powerline-footer",
-    "npm:pi-typesafe"
+    "npm:pi-typesafe",
+    "npm:@99percentpeople/pi-codex-api"
   ],
   "powerline": "default",
   "extensions": [
