@@ -176,3 +176,10 @@ export PATH=/home/rugobal/.opencode/bin:$PATH
 
 # Added by the Hunk installer (https://hunk.dev)
 export PATH='/home/rugobal/.hunk/bin':"$PATH"
+
+# bun completions
+[ -s "/home/rugobal/.bun/_bun" ] && source "/home/rugobal/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
