@@ -12,7 +12,6 @@ pi/.pi/agent/**/auth-state.json
 pi/.pi/agent/**/token*
 pi/.pi/agent/**/secret*
 pi/.pi/agent/**/credential*
-pi/.pi/agent/extensions/ask-telegram.ts
 pi/.pi/agent/sessions/
 pi/.pi/agent/missions/
 pi/.pi/agent/npm/
