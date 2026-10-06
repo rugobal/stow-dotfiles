@@ -7,8 +7,13 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Keep the Omarchy/Starship prompt instead of an Oh My Zsh theme.
-ZSH_THEME=""
+# Use Omarchy's Starship prompt there; retain the previous theme elsewhere.
+if [[ -f /usr/share/omarchy-zsh/shell/all ]]; then
+  ZSH_THEME=""
+else
+  ZSH_THEME="gruvbox"
+  SOLARIZED_THEME="dark"
+fi
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -75,19 +80,23 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #
-# Omitted on purpose:
-#   z                      — Omarchy already provides zoxide (and a `z` command)
-#   zsh-syntax-highlighting — omarchy-zsh loads this last so every widget is highlighted
-plugins=(git extract kubectl zsh-autosuggestions)
+if [[ -f /usr/share/omarchy-zsh/shell/all ]]; then
+  # Omarchy provides zoxide and loads syntax highlighting itself.
+  plugins=(git extract kubectl zsh-autosuggestions)
+else
+  # Preserve the pre-Omarchy Oh My Zsh plugin set.
+  plugins=(git z extract kubectl zsh-autosuggestions zsh-syntax-highlighting)
+fi
 
 source "$ZSH/oh-my-zsh.sh"
 
-# OMZ git aliases collide with Omarchy worktree helpers (ga/gd).
-unalias ga gd 2>/dev/null
-
 # Omarchy: options, completion, aliases, mise, zoxide, fzf, and Starship prompt.
-[[ -f /usr/share/omarchy-zsh/shell/zoptions ]] && source /usr/share/omarchy-zsh/shell/zoptions
-[[ -f /usr/share/omarchy-zsh/shell/all ]] && source /usr/share/omarchy-zsh/shell/all
+if [[ -f /usr/share/omarchy-zsh/shell/all ]]; then
+  # OMZ git aliases collide with Omarchy worktree helpers (ga/gd).
+  unalias ga gd 2>/dev/null
+  [[ -f /usr/share/omarchy-zsh/shell/zoptions ]] && source /usr/share/omarchy-zsh/shell/zoptions
+  source /usr/share/omarchy-zsh/shell/all
+fi
 
 # User configuration
 
