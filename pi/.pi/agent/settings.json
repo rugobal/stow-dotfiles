@@ -1,0 +1,25 @@
+{
+  "lastChangelogVersion": "1.0.4",
+  "theme": "dark",
+  "hideThinkingBlock": true,
+  "defaultProvider": "openrouter",
+  "defaultModel": "deepseek/deepseek-v4.1-flash",
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-antigravity",
+    "npm:pi-subagents",
+    "npm:pi-mcp-adapter",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:billion-context-pi",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-lens",
+    "npm:pi-warden",
+    "npm:pi-fast-all",
+    "npm:pi-powerline-footer",
+    "npm:pi-typesafe"
+  ],
+  "powerline": "default",
+  "extensions": [
+    "-builtin:mcp"
+  ]
+}

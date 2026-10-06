@@ -1,1 +1,19 @@
 tmux/.tmux/plugins/
+
+# Pi credentials and machine-local runtime state (never sync)
+pi/.pi/agent/auth.json
+pi/.pi/agent/mcp.json
+pi/.pi/agent/models.json
+pi/.pi/agent/web-search.json
+pi/.pi/agent/mcp-*.json
+pi/.pi/agent/**/auth.json
+pi/.pi/agent/**/auth-state.json
+pi/.pi/agent/**/token*
+pi/.pi/agent/**/secret*
+pi/.pi/agent/**/credential*
+pi/.pi/agent/extensions/ask-telegram.ts
+pi/.pi/agent/sessions/
+pi/.pi/agent/missions/
+pi/.pi/agent/npm/
+pi/.pi/agent/web-search-cache/
+pi/.pi/agent/run-history.jsonl

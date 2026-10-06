@@ -1,0 +1,7 @@
+{
+  "enabled": true,
+  "indicator": "widget",
+  "indicatorText": "⚡fast",
+  "indicatorColor": "#ffa657",
+  "warnAboveUsd": 5
+}

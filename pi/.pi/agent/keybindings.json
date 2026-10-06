@@ -1,0 +1,5 @@
+{
+  "app.model.select": "alt+m",
+  "tui.select.up": ["up", "ctrl+p"],
+  "tui.select.down": ["down", "ctrl+n"]
+}
