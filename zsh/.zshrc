@@ -1,15 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="gruvbox" # agnoster
-SOLARIZED_THEME="dark"
+# Keep the Omarchy/Starship prompt instead of an Oh My Zsh theme.
+ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -39,8 +38,7 @@ SOLARIZED_THEME="dark"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# Required by tmuxp so it can set pane/window titles itself.
-export DISABLE_AUTO_TITLE="true"
+# DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -64,17 +62,32 @@ export DISABLE_AUTO_TITLE="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/dotfiles/zsh/.oh-my-zsh/custom
+# Custom plugins/themes live in the stow repo, not inside ~/.oh-my-zsh.
+if [[ -d "$HOME/stow-dotfiles/zsh/.oh-my-zsh/custom" ]]; then
+  ZSH_CUSTOM="$HOME/stow-dotfiles/zsh/.oh-my-zsh/custom"
+elif [[ -d "$HOME/dotfiles/zsh/.oh-my-zsh/custom" ]]; then
+  ZSH_CUSTOM="$HOME/dotfiles/zsh/.oh-my-zsh/custom"
+fi
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z extract kubectl zsh-autosuggestions zsh-syntax-highlighting)
+#
+# Omitted on purpose:
+#   z                      — Omarchy already provides zoxide (and a `z` command)
+#   zsh-syntax-highlighting — omarchy-zsh loads this last so every widget is highlighted
+plugins=(git extract kubectl zsh-autosuggestions)
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
+
+# OMZ git aliases collide with Omarchy worktree helpers (ga/gd).
+unalias ga gd 2>/dev/null
+
+# Omarchy: options, completion, aliases, mise, zoxide, fzf, and Starship prompt.
+[[ -f /usr/share/omarchy-zsh/shell/zoptions ]] && source /usr/share/omarchy-zsh/shell/zoptions
+[[ -f /usr/share/omarchy-zsh/shell/all ]] && source /usr/share/omarchy-zsh/shell/all
 
 # User configuration
 
@@ -101,19 +114,30 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-alias ls="lsd"
-
-## setting dircolors on ls
-eval `dircolors ~/.dir_colors/dircolors.ansi-dark`
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# if [[ -x /opt/anaconda3/bin/conda ]]; then
+#   __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#   if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+#   else
+#     if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+#       . "/opt/anaconda3/etc/profile.d/conda.sh"
+#     else
+#       export PATH="/opt/anaconda3/bin:$PATH"
+#     fi
+#   fi
+#   unset __conda_setup
+# fi
+# # <<< conda initialize <<<
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -130,20 +154,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
-export winhost=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
-if [ ! -n "$(grep -P "[[:space:]]winhost" /etc/hosts)" ]; then
-        printf "%s\t%s\n" "$winhost" "winhost" | sudo tee -a "/etc/hosts"
-fi
-
 # ASDF setup
 [ -f "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
-
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 # Set the keybinding to Emacs mode
 # This is to be able to use:
@@ -159,13 +175,10 @@ bindkey '^[k' kill-line
 # Bind Ctrl+u to delete from cursor to beginning of line
 bindkey '^u' backward-kill-line
 
-
-
 export PATH="$PATH:/opt/nvim-linux64/bin:$HOME/.cargo/bin"
-alias config='/usr/bin/git --git-dir=/home/rugobal/.dotfiles/ --work-tree=/home/rugobal'
-# Ensure aliases use underlying command completion and make lsd/ll behave like ls
+[[ -d /home/rugobal/.dotfiles ]] && alias config='/usr/bin/git --git-dir=/home/rugobal/.dotfiles/ --work-tree=/home/rugobal'
+# Ensure aliases use underlying command completion
 setopt complete_aliases
-compdef _ls ll lsd
 
 # >>> Codex installer >>>
 export PATH="/home/rugobal/.local/bin:$PATH"

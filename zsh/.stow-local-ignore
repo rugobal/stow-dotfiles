@@ -1,0 +1,3 @@
+# Full Oh My Zsh lives in ~/.oh-my-zsh (cloned separately).
+# This package only tracks custom plugins/themes; ZSH_CUSTOM points at them.
+\.oh-my-zsh
