@@ -1,0 +1,23 @@
+id = "local.last-tab"
+name = "Last Tab"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Tab-level toggle to the last used tab (tmux last-window style), instead of sequential previous_tab."
+platforms = ["linux", "macos", "windows"]
+
+# Track focus history: on every tab focus change, remember which tab we came from.
+[[events]]
+on = "tab.focused"
+command = ["python3", "last_tab.py", "event"]
+
+# Drop stale references when a tab closes.
+[[events]]
+on = "tab.closed"
+command = ["python3", "last_tab.py", "event"]
+
+[[actions]]
+id = "toggle"
+title = "Toggle last used tab"
+description = "Focus the tab that was focused before the current one"
+contexts = ["global"]
+command = ["python3", "last_tab.py", "action"]

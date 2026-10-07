@@ -88,7 +88,7 @@ next_workspace = "ctrl+["
 # remote_image_paste = "ctrl+v" # only active in herdr --remote; empty disables raw-key image paste
 # new_tab = "prefix+c"
 # rename_tab = "prefix+shift+t"
-previous_tab = ["prefix+p", "alt+shift+h"]
+previous_tab = ["alt+shift+h"]
 next_tab = ["prefix+n", "alt+shift+l"]
 # move_tab_previous = ""   # optional, e.g. "alt+shift+left" moves the tab toward the front
 # move_tab_next = ""       # optional, e.g. "alt+shift+right" moves the tab toward the back
@@ -104,6 +104,10 @@ next_tab = ["prefix+n", "alt+shift+l"]
 # cycle_pane_next = "prefix+tab"
 # cycle_pane_previous = "prefix+shift+tab"
 # last_pane = ""          # optional, unset by default; bind e.g. "prefix+tab" for global back-and-forth
+# last_pane targets the last focused *pane*, which across tabs behaves like
+# sequential tab switching. prefix+p is instead bound to the local.last-tab
+# plugin action below, so it toggles to the last *used tab* (tmux last-window).
+last_pane = ""
 split_vertical = "prefix+%"
 split_horizontal = "prefix+\""
 # close_pane = "prefix+x"
@@ -393,7 +397,11 @@ command = "~/.config/herdr/scripts/vim_tmux_navigator.sh up"
 key = "ctrl+l"
 type = "shell"
 command = "~/.config/herdr/scripts/vim_tmux_navigator.sh right"
+# Toggle to the last used tab (tmux last-window style). Implemented by the
+# local.last-tab plugin: a tab.focused hook records focus history and the
+# `toggle` action focuses the previous tab. Replaces the pane-scoped last_pane.
 [[keys.command]]
-key = "prefix+y"
-type = "shell"
-command = "env > /tmp/herdr_keys_env.log"
+key = "prefix+p"
+type = "plugin_action"
+command = "local.last-tab.toggle"
+description = "toggle to last used tab"
