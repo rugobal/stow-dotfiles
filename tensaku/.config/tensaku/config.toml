@@ -1,0 +1,13 @@
+[general]
+annotation-size-factor = 2.0
+
+# Esc closes the editor the way a cancel should: the window goes away, nothing is
+# copied and nothing is saved, so the original capture and the clipboard are left
+# exactly as they were.
+#
+# Tensaku adds the exit itself -- close-on-esc appends an implicit Exit to
+# whatever actions-on-escape already runs (src/sketch_board.rs 5594-5620) -- and
+# actions-on-escape is deliberately left empty here so Escape only ever exits. A
+# tool that owns Escape (in-progress crop, text edit) still handles it first, so
+# this only fires when Esc would otherwise do nothing at all.
+close-on-esc = true

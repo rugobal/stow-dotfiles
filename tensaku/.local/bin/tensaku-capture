@@ -1,0 +1,43 @@
+#!/bin/bash
+# Opens Tensaku's own capture overlay, then its editor on what you chose.
+#
+# Drag a region, Space snaps to the window under the pointer, F takes the
+# whole screen, S switches to a scrolling capture — every one of those
+# decided *after* the key is pressed, which is the point: grim+slurp has
+# already asked and answered by the time you change your mind.
+#
+# Bound to PRINT; Omarchy's own `omarchy-capture-screenshot` stays available on
+# CTRL + PRINT for when the capture mode is already decided.
+#
+# The capture lands in the session's screenshot directory under a
+# timestamped name and reaches the clipboard on Enter, so it leaves
+# behind what Omarchy's own screenshot flow leaves behind.
+#
+# Enter is deliberately the one key that finishes the whole flow: copy, save,
+# close. The close is an explicit `exit` in the Enter action list rather than
+# --early-exit, because --early-exit was measured NOT to close the editor -- its
+# close-on-copy only fires when auto-copy is off (src/sketch_board.rs:1132) --
+# while an explicit exit is unconditional. Measured with the explicit action:
+# 'Copied to clipboard.' / "File saved to '...'." / 'Exit action, ignoring further
+# actions.', the window gone, and image/png left on the clipboard.
+#
+# Esc is the cancel: it closes the editor without copying and without saving,
+# via close-on-esc in ~/.config/tensaku/config.toml with actions-on-escape left
+# empty, so Escape only ever exits. Whatever the file and the clipboard held
+# before the editor appeared is what they still hold afterwards. Note that with
+# --capture nothing is on disk until a save action runs, so a cancelled capture
+# leaves no file behind rather than an unannotated one.
+#
+# `tensaku` is invoked by bare name so this works regardless of how it
+# was installed (~/.cargo/bin, /usr/bin, /usr/local/bin, …); a key
+# binding runs in the user session, where the install dir is on $PATH.
+user_dirs="${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+[[ -f $user_dirs ]] && source "$user_dirs"
+dir="${OMARCHY_SCREENSHOT_DIR:-${XDG_PICTURES_DIR:-$HOME/Pictures}}"
+mkdir -p "$dir"
+exec tensaku --capture \
+  --output-filename "$dir/tensaku-$(date +%Y-%m-%d_%H-%M-%S).png" \
+  --actions-on-enter save-to-clipboard,exit \
+  --save-after-copy \
+  --copy-command wl-copy \
+  "$@"
