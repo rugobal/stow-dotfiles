@@ -1,0 +1,3 @@
+# Not a stow package: run ./install.sh instead.
+global-packages\.txt
+install\.sh

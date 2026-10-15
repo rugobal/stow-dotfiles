@@ -1,0 +1,5 @@
+# Global npm packages for this machine, one per line. Install with ./install.sh.
+# Language servers used by Claude Code's pyright-lsp and typescript-lsp plugins.
+pyright
+typescript-language-server
+typescript
